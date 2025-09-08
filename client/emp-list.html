@@ -32,6 +32,7 @@
                 <th>직책</th>
                 <th>급여</th>
                 <th>부서</th>
+                <th>수정</th>
                 <th>삭제</th>
             </tr>
             <tr v-for="item in list">
@@ -40,9 +41,11 @@
                 <td>{{item.JOB}}</td>
                 <td>{{item.SAL}}</td>
                 <td>{{item.DNAME}}</td>
+                <td><button @click="fnEdit(item.EMPNO)">수정</button></td>
                 <td><button @click="fnRemove(item.EMPNO)">삭제</button></td>
             </tr>
         </table>
+        <a href="emp-edit.html"><button>추가</button></a>
     </div>
 </body>
 </html>
@@ -88,6 +91,9 @@
                         
                     }
                 });
+            }, 
+            fnEdit : function(empNo){
+                location.href="emp-edit.html?empNo="+empNo;
             }
         }, // methods
         mounted() {
