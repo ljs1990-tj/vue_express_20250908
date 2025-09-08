@@ -32,6 +32,7 @@
                 <th>직책</th>
                 <th>급여</th>
                 <th>부서</th>
+                <th>삭제</th>
             </tr>
             <tr v-for="item in list">
                 <td>{{item.EMPNO}}</td>
@@ -39,6 +40,7 @@
                 <td>{{item.JOB}}</td>
                 <td>{{item.SAL}}</td>
                 <td>{{item.DNAME}}</td>
+                <td><button @click="fnRemove(item.EMPNO)">삭제</button></td>
             </tr>
         </table>
     </div>
@@ -65,6 +67,25 @@
                     success: function(data) {
                         console.log(data);
                         self.list = data.empList;
+                    }
+                });
+            },
+            fnRemove : function(empNo){
+                let self = this;
+                if(!confirm("정말 삭제??")){
+                    return;
+                }
+                $.ajax({
+                    url: "http://localhost:3009/emp/delete",
+                    dataType: "json",
+                    type: "GET",
+                    data: {empNo : empNo},
+                    success: function(data) {
+                        if(data.result == "success"){
+                            alert("삭제되었습니다!");
+                            self.fnEmpList();
+                        }
+                        
                     }
                 });
             }

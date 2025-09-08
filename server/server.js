@@ -65,14 +65,14 @@ app.get('/emp/list', async (req, res) => {
   }
 });
 
-app.get('/stu/insert', async (req, res) => {
-  const { stuNo, name, dept } = req.query;
+app.get('/emp/delete', async (req, res) => {
+  const { empNo } = req.query;
 
   try {
     await connection.execute(
       // `INSERT INTO STUDENT (STU_NO, STU_NAME, STU_DEPT) VALUES (${stuNo}, '${name}', '${dept}')`,
-      `INSERT INTO STUDENT (STU_NO, STU_NAME, STU_DEPT) VALUES (:stuNo, :name, :dept)`,
-      [stuNo, name, dept],
+      `DELETE FROM EMP WHERE EMPNO = :empNo`,
+      [empNo],
       { autoCommit: true }
     );
     res.json({
