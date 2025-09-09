@@ -31,6 +31,7 @@
                 <th>아이디</th>
                 <th>직급</th>
                 <th>급여</th>
+                <th>수정</th>
                 <th>삭제</th>
             </tr>
             <tr v-for="item in list">
@@ -39,6 +40,7 @@
                 <td>{{item.ID}}</td>
                 <td>{{item.POSITION}}</td>
                 <td>{{item.PAY}}</td>
+                <td><button @click="fnEdit(item.PROFNO)">수정</button></td>
                 <td><button @click="fnRemove(item.PROFNO)">삭제</button></td>
             </tr>
          </table>
@@ -88,6 +90,9 @@
                         self.fnList();
                     }
                 });
+            },
+            fnEdit : function(profNo){
+                location.href="prof-edit.html?profNo="+profNo;
             }
         }, // methods
         mounted() {
