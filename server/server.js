@@ -120,6 +120,34 @@ app.get('/emp/delete', async (req, res) => {
   }
 });
 
+app.get('/emp/deleteAll', async (req, res) => {
+  const { removeList } = req.query;
+  let query = "DELETE FROM EMP WHERE EMPNO IN (";
+  for(let i=0; i<removeList.length; i++){
+    query += removeList[i];
+    // 마지막 빼고 ',' 추가
+    if(removeList.length-1 != i) {
+      query += ","
+    };
+  }
+  query += ")";
+  console.log(query);
+  try {
+    await connection.execute(
+      query,
+      [],
+      { autoCommit: true }
+    );
+    res.json({
+        result : "success"
+    });
+  } catch (error) {
+    console.error('Error executing insert', error);
+    res.status(500).send('Error executing insert');
+  }
+});
+
+
 app.get('/emp/insert', async (req, res) => {
   const { empNo, eName, job, selectDept } = req.query;
 
