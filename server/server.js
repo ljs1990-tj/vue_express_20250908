@@ -37,11 +37,17 @@ app.get('/', (req, res) => {
 });
 
 app.get('/emp/list', async (req, res) => {
-  const { } = req.query;
+  const { deptNo } = req.query;
+  let query = "";
+  if(deptNo != "" && deptNo != null){
+    query = `WHERE E.DEPTNO = ${deptNo} `
+  }
+  
   try {
     const result = await connection.execute(
       `SELECT * FROM EMP E `
       + `INNER JOIN DEPT D ON E.DEPTNO = D.DEPTNO `
+      + query
       + `ORDER BY SAL DESC`
     );
     const columnNames = result.metaData.map(column => column.name);
@@ -69,8 +75,9 @@ app.get('/emp/info', async (req, res) => {
   const { empNo } = req.query;
   try {
     const result = await connection.execute(
-      `SELECT E.*, EMPNO "empNo", ENAME "eName", JOB "job", DEPTNO "selectDept" `
+      `SELECT E.*, DNAME, EMPNO "empNo", ENAME "eName", JOB "job", E.DEPTNO "selectDept" `
       + `FROM EMP E `
+      + `INNER JOIN DEPT D ON E.DEPTNO = D.DEPTNO `
       + `WHERE EMPNO = ${empNo}`
     );
     const columnNames = result.metaData.map(column => column.name);
