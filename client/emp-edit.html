@@ -37,8 +37,13 @@
             <tr>
                 <th>사번</th>
                 <td>
-                    <input type="text" v-model="info.empNo">
-                    <button class="check-btn">중복체크</button>
+                    <span v-if="empNo == ''">
+                        <input type="text" v-model="info.empNo">
+                        <button class="check-btn">중복체크</button>
+                    </span>
+                    <span v-else>
+                        <input type="text" v-model="info.empNo" disabled>
+                    </span>
                 </td>
             </tr>
             <tr>
